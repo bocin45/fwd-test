@@ -49,7 +49,7 @@ public class GameServiceImpl implements GameService {
         for (int j = 0; j < board.length; j++) {
             System.out.print("|  " + board[j][0] + "  ");
             for (int k = 1; k < board[j].length; k++) {
-                System.out.print("|  " + board[j][k]+"  ");
+                System.out.print("|  " + board[j][k] + "  ");
             }
             System.out.println("|");
         }
@@ -185,6 +185,19 @@ public class GameServiceImpl implements GameService {
 
     }
 
+    @Override
+    public boolean isNumeric(String input) {
+        if (input == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(input);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
     private List<Integer> updateAvailableSlot(String[][] board) {
         List<Integer> available = new ArrayList<>();
         for (int j = 0; j < board.length; j++) {
@@ -200,17 +213,4 @@ public class GameServiceImpl implements GameService {
 
         return available;
     }
-
-    public boolean isNumeric(String strNum) {
-        if (strNum == null) {
-            return false;
-        }
-        try {
-            double d = Double.parseDouble(strNum);
-        } catch (NumberFormatException nfe) {
-            return false;
-        }
-        return true;
-    }
-
 }

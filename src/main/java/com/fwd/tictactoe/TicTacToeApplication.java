@@ -19,6 +19,7 @@ public class TicTacToeApplication {
         Scanner in = new Scanner(System.in);
         UUID id = UUID.randomUUID();
 
+        //Input Board Size
         boolean correctSize = false;
         String sizeInput = "";
         while (!correctSize) {
@@ -31,6 +32,7 @@ public class TicTacToeApplication {
             correctSize = true;
         }
 
+        //Game Start
         GameData gameData = service.createGame(id, Integer.valueOf(sizeInput));
         boolean winner = false;
         boolean draw = false;
@@ -38,7 +40,7 @@ public class TicTacToeApplication {
         String player = "X";
         while (!winner) {
             service.printBoard(gameData);
-            System.out.println("IT IS player "+ player + " Turns");
+            System.out.println("IT IS player "+ player + " Turns, please input the Slot number");
 
             //Validate Input
             String input = in.next();
@@ -49,11 +51,11 @@ public class TicTacToeApplication {
             //Validate Availibility
             int slot = Integer.parseInt(input);
             if (!service.checkAvailableSlot(id, slot)) {
-                System.out.println(
-                        "Invalid input; Slot is not Exist or Already Taken");
+                System.out.println("Invalid input; Slot is not Exist or Already Taken");
                 continue;
             }
 
+            //Update Board and Check Winner
             int row = slot / 10;
             int column = slot % 10;
             gameData = service.updateBoard(id, row, column, player);
@@ -65,6 +67,8 @@ public class TicTacToeApplication {
                 draw = true;
                 break;
             }
+
+            //Change Player Turn
             player = player.equals("X") ? "O" : "X";
         }
 
